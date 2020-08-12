@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.set("view engine", "ejs");
 
 // database connection
 const dbURI =
-  "mongodb+srv://admin:<password>@cluster0-cn27r.mongodb.net/<dbname>?retryWrites=true&w=majority";
+  "mongodb+srv://<YOUR_USERNAME>:<YOUR_PASSWORD>@cluster0-cn27r.mongodb.net/<DB_NAME>";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
@@ -24,3 +25,4 @@ mongoose
 // routes
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
+app.use(authRoutes);
