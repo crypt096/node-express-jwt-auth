@@ -2,12 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
+const { requireAuth } = require("./middleware/authMiddleware");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 // middleware
 app.use(express.static("public"));
 app.use(express.json());
+app.use(cookieParser());
 
 // view engine
 app.set("view engine", "ejs");
@@ -25,11 +28,10 @@ mongoose
 
 // routes
 app.get("/", (req, res) => res.render("home"));
-app.get("/smoothies", (req, res) => res.render("smoothies"));
+app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
 app.use(authRoutes);
 
 // cookies
-const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 app.get("/set-cookies", (req, res) => {

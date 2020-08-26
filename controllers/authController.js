@@ -24,6 +24,7 @@ const handleErrors = (err) => {
 
   // validation errors
   if (err.message.includes("user validation failed")) {
+    // console.log(err);
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
     });
@@ -35,7 +36,7 @@ const handleErrors = (err) => {
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, "crypt0's secret", {
+  return jwt.sign({ id }, "crypt0 secret", {
     expiresIn: maxAge,
   });
 };
